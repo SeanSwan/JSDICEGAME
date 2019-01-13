@@ -9,37 +9,22 @@ GAME RULES:
 
 */
 
-var score, roundScore, activePlayer;
+var scores, roundScore, activePlayer;
 
-
-// create the score for each player var scores
-// create variable for Round Score
-// create a variable for the active player 0 = 1st player 1 = 2nd player
+init();
 // create dice using math.random() and math.floor() ex math.floor(math.random())
-var scores = [0.0];
-var roundScore = 0;
-activePlayer = 0;
+
 dice = Math.floor(Math.random() * 6) + 1;
 console.log(dice);
 
 
 
-// control css by hiding element
-document.querySelector('.dice').style.display ='none'
-
-// getElementById is faster if your using id's then query selector no need for # just name is fine
-
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
-
 //https://developer.mozilla.org/en-US/docs/Web/Events Event Listhener Refferance
 
-function btn() {
+/*function btn() {
   //do somthing here
 }
-btn();
+btn();*/
 
 /*this now has become a call back function calling btn() since this function .addEventListhener is now calling btn with the need for ()
 document.querySelector('.btn-roll').addEventListener('click', btn);*/
@@ -58,6 +43,43 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     roundScore += dice;
     document.querySelector('#current-' + activePlayer).textContent = roundScore;
 } else {
+ //NEXT PLAYER
+ nextPlayer();
+}
+
+});
+
+document.querySelector('.btn-hold').addEventListener('click', function() {
+  //Add current score to global score
+scores[activePlayer] += roundScore;
+console.log(activePlayer);
+//same thing as above. longer version non preffered
+//scores[activePlayer] = scores[activePlayer] + roundScore;
+
+  // Update the UI activePlayer with .textContent using id #score-'
+document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+console.log(activePlayer);
+  // Check if player won the game
+  if (scores[activePlayer] >= 100) {
+    document.querySelector('#name-' + activePlayer).textContent ='Winner!';
+    //change the css style display to none. Not the best way to mix css with javascript. 
+    //better practice is 'document.querySelector('.player-0-panel').classList.toggle('active');'
+    // Using the .toggle between classes ex .active class and .winner class in css add to index html tags.
+    document.querySelector('.dice').style.display ='none';
+    document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+    document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+
+
+  } else {
+//NEXT PLAYER
+nextPlayer();
+
+  }
+
+  
+});
+
+function nextPlayer() {
   //Next Player
   // active player is test condition if it's zero then activePlayer should be 1 else activePlayer should be 0
   
@@ -76,12 +98,45 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
   // used .toggle to switch the .active class classes between players
   document.querySelector('.player-0-panel').classList.toggle('active');
   document.querySelector('.player-1-panel').classList.toggle('active');
-
   // hides the dice in the .btn-roll function
   document.querySelector('.dice').style.display = 'none';
 }
 
-});
+document.querySelector('.btn-new').addEventListener('click', init);
+
+function init() {
+// create the score for each player var scores
+// create variable for Round Score
+// create a variable for the active player 0 = 1st player 1 = 2nd player
+scores = [0, 0];
+roundScore = 0;
+activePlayer = 0;
+
+// control css by hiding element
+document.querySelector('.dice').style.display ='none'
+
+// getElementById is faster if your using id's then query selector no need for # just name is fine
+
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
+//pulling in player name text
+document.getElementById('name-0').textContent ='Player 1';
+document.getElementById('name-1').textContent ='Player 2';
+// change .winner and .active class from active on init
+document.querySelector('.player-0-panel').classList.remove('winner');
+document.querySelector('.player-1-panel').classList.remove('winner');
+document.querySelector('.player-0-panel').classList.remove('active');
+document.querySelector('.player-1-panel').classList.remove('active');
+document.querySelector('.player-0-panel').classList.add('active');
+}
+
+
+
+  
+
+
 
 
 

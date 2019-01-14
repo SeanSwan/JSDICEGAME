@@ -153,3 +153,16 @@ function init() {
 // prints players score to the console
 //var x = document.querySelector('#score-0').textContent;
 //console.log(x)
+
+/*Your 3 CHALLENGES
+change the game to follow these rules:
+
+1. A player looses his ENTIRE score when he rolls two 6 in a row. after that, it's the next player's turn. (Hint:
+  Always save thr previous dice roll in a seperate variable)
+  2. Add input field to html where players can set the winning score, so that they can change the predefined score of 100.
+  (Hint: you can read that value with the .value property in JavaScript. Use google to find it out.)
+  3. add another dice to the game, so that there are two dices now. the player loses his his current score whenone of them is an 1 (Hint: you will need CSS to postion the second dice, so take a look at the CSS
+    code foor the first one.)
+    */
+
+    
